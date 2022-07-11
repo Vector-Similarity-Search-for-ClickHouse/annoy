@@ -869,7 +869,7 @@ public:
 #endif
 
 protected:
-  const int _f;
+  const uint64_t _f;
   size_t _s;
   S _n_items;
   void* _nodes; // Could either be mmapped, or point to a memory buffer that we reallocate
@@ -885,7 +885,7 @@ protected:
   bool _built;
 public:
 
-   AnnoyIndex(int f) : _f(f), _seed(Random::default_seed) {
+   AnnoyIndex(uint64_t f) : _f(f), _seed(Random::default_seed) {
     _s = offsetof(Node, v) + _f * sizeof(T); // Size of each node
     _verbose = false;
     _built = false;
@@ -896,7 +896,7 @@ public:
     unload();
   }
 
-  int get_f() const {
+  uint64_t get_f() const {
     return _f;
   }
 
@@ -919,7 +919,7 @@ public:
     n->children[1] = 0;
     n->n_descendants = 1;
 
-    for (int z = 0; z < _f; z++)
+    for (uint64_t z = 0; z < _f; z++)
       n->v[z] = w[z];
 
     D::init_node(n, _f);
@@ -1312,7 +1312,7 @@ protected:
       children_indices[1].clear();
 
       // Set the vector to 0.0
-      for (int z = 0; z < _f; z++)
+      for (uint64_t z = 0; z < _f; z++)
         m->v[z] = 0;
 
       for (size_t i = 0; i < indices.size(); i++) {
